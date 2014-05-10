@@ -10,12 +10,12 @@ namespace TuringMachineCore
     {
         public bool Halted { get; private set; }
         public int Position { get; private set; }
+        public int State { get; private set; }
         
         private TuringTable table;
         private TuringTape tape;
         private char currentSymbol;
         private TuringInstruction currentInstruction;
-        private int state;
 
         public void Load(TuringTable table)
         {
@@ -32,7 +32,7 @@ namespace TuringMachineCore
         {
             Halted = false;
             currentSymbol = tape.Read(Position);
-            currentInstruction = table.GetInstruction(currentSymbol, state);
+            currentInstruction = table.GetInstruction(currentSymbol, State);
             if (currentInstruction != null)
             {
                 Execute(currentInstruction);
@@ -72,7 +72,7 @@ namespace TuringMachineCore
                 Position++;
             }
 
-            state = instruction.NextState;
+            State = instruction.NextState;
         }
 
         public string Print()
@@ -83,7 +83,7 @@ namespace TuringMachineCore
         public void Reset()
         {
             Position = 0;
-            state = 0;
+            State = 0;
             tape.Initialise();
             Halted = false;
         }
