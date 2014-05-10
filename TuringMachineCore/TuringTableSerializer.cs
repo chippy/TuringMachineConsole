@@ -16,7 +16,7 @@ namespace TuringMachineCore
         public TuringTableSerializer()
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string MachinePath = Path.Combine(appDataPath, "TuringMachines");
+            MachinePath = Path.Combine(appDataPath, "TuringMachines");
 
             if (!Directory.Exists(MachinePath))
             {

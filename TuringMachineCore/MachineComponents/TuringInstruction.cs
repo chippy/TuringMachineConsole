@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TuringMachineCore
 {
+    [Serializable]
     public class TuringInstruction
     {
         public TuringOuput Output { get; private set;  }

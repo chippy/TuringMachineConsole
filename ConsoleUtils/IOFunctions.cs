@@ -8,7 +8,7 @@ namespace ConsoleUtils
 {
     public class IOFunctions
     {
-        public static char GetRestrictedKeyChoice(IEnumerable<Char> characters, string prompt)
+        public char GetRestrictedKeyChoice(IEnumerable<Char> characters, string prompt)
         {
             IEnumerable<ConsoleKey> keys = characters.Select(c => (ConsoleKey)Enum.Parse(typeof(ConsoleKey), c.ToString().ToUpper()));
 
@@ -25,13 +25,13 @@ namespace ConsoleUtils
             return key.KeyChar;
         }
 
-        public static bool GetYesOrNo(string prompt)
+        public bool GetYesOrNo(string prompt)
         {
             char choice = GetRestrictedKeyChoice("yn", prompt);
             return choice == 'y';
         }
 
-        public static int GetNumber(string prompt)
+        public int GetNumber(string prompt)
         {
             Console.Write(prompt);
 
