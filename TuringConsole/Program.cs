@@ -16,13 +16,13 @@ namespace TuringConsole
 
             TuringTable table = new TuringTable(symbols, states);
             FillTable(table, symbols, states);
+            UniversalTuringMachine machine = new UniversalTuringMachine();
+            machine.Load(table);
             do
             {
                 Console.WriteLine("Input:" );
                 string input = Console.ReadLine();
-                TuringTape tape = new TuringTape(input);
-                UniversalTuringMachine machine = new UniversalTuringMachine();
-                machine.RunToEnd();
+                machine.Run(input);
                 Console.WriteLine(machine.Print());
                 Console.ReadLine();
             }

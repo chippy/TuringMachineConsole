@@ -10,28 +10,41 @@ namespace TuringMachineCore
     {
         private List<Char> positiveTape;
         private List<Char> negativeTape;
-        private int position;
+        private string originalInput;
 
         public TuringTape(String input)
         {
-            positiveTape = input.ToList();
-            negativeTape = new List<Char>();
-            position = 0;
+            originalInput = input;
+            Initialise();
         }
 
-        public Char Read()
+        public void Initialise()
+        {
+            positiveTape = originalInput.ToList();
+            negativeTape = new List<Char>();
+        }
+
+        public Char Read(int position)
         {
             if (position >= 0)
             {
-                return positiveTape[position]; 
+                while (position >= positiveTape.Count)
+                {
+                    positiveTape.Add(' ');
+                }
+                return positiveTape[position];
             }
             else
             {
+                while (Math.Abs(position) >= negativeTape.Count)
+                {
+                    negativeTape.Add(' ');
+                }
                 return negativeTape[Math.Abs(position)];
             }
         }
 
-        public void Write(Char symbol)
+        public void Write(Char symbol, int position)
         {
             if (position >=0)
             {
@@ -42,27 +55,6 @@ namespace TuringMachineCore
                 negativeTape[Math.Abs(position)] = symbol;
             }
         }
-        public void Right()
-        {
-            position++;
-            if (position == positiveTape.Count)
-            {
-                extend(positiveTape);
-            }
-        }
-        public void Left()
-        {
-            position--;
-            if (Math.Abs(position) == negativeTape.Count)
-            {
-                extend(negativeTape);
-            }
-        }
-        private void extend(List<Char> tape)
-        {
-            tape.AddRange(new List<Char>("          "));
-        }
-
         public string Print()
         {
             return new String(positiveTape.ToArray());
