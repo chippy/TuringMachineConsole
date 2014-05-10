@@ -91,6 +91,7 @@ namespace TuringConsole
             machine.Reset();
             Console.WriteLine(machine.Print());
             PrintPointer(machine.GetPosition());
+            Console.ReadLine();
             while (machine.Halted() == false)
             {
                 machine.Step();

@@ -85,6 +85,7 @@ namespace TuringMachineCore
             position = 0;
             state = 0;
             tape.Initialise();
+            halted = false;
         }
 
         public int GetPosition()
