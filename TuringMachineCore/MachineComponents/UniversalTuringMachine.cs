@@ -8,13 +8,14 @@ namespace TuringMachineCore
 {
     public class UniversalTuringMachine
     {
+        public bool Halted { get; private set; }
+        public int Position { get; private set; }
+        
         private TuringTable table;
         private TuringTape tape;
         private char currentSymbol;
         private TuringInstruction currentInstruction;
         private int state;
-        private bool halted;
-        private int position;
 
         public void Load(TuringTable table)
         {
@@ -23,15 +24,14 @@ namespace TuringMachineCore
 
         public void Run(string input)
         {
-            this.tape = new TuringTape(input);
-            Reset();
+            LoadTape(input);
             RunToEnd();
         }
         
         public void Step()
         {
-            halted = false;
-            currentSymbol = tape.Read(position);
+            Halted = false;
+            currentSymbol = tape.Read(Position);
             currentInstruction = table.GetInstruction(currentSymbol, state);
             if (currentInstruction != null)
             {
@@ -39,14 +39,14 @@ namespace TuringMachineCore
             }
             else
             {
-                halted = true;
+                Halted = true;
             }
         }
 
         public void RunToEnd()
         {
-            halted = false;
-            while (halted == false)
+            Halted = false;
+            while (Halted == false)
             {
                 Step();
             }
@@ -56,20 +56,20 @@ namespace TuringMachineCore
         {
             if (instruction.Output == TuringOuput.Write)
             {
-                tape.Write(instruction.OutputSymbol.Value, position);
+                tape.Write(instruction.OutputSymbol.Value, Position);
             }
             else if (instruction.Output == TuringOuput.Erase)
             {
-                tape.Write(' ', position);
+                tape.Write(' ', Position);
             }
 
             if (instruction.Move == TuringMove.Left)
             {
-                position--;
+                Position--;
             }
             else if (instruction.Move == TuringMove.Right)
             {
-                position++;
+                Position++;
             }
 
             state = instruction.NextState;
@@ -82,20 +82,10 @@ namespace TuringMachineCore
 
         public void Reset()
         {
-            position = 0;
+            Position = 0;
             state = 0;
             tape.Initialise();
-            halted = false;
-        }
-
-        public int GetPosition()
-        {
-            return position;
-        }
-
-        public bool Halted()
-        {
-            return halted;
+            Halted = false;
         }
 
         public void LoadTape(string input)
