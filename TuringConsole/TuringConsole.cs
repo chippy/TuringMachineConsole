@@ -89,15 +89,17 @@ namespace TuringConsole
             string input = Console.ReadLine();
             machine.LoadTape(input);
             machine.Reset();
-            Console.WriteLine(machine.Print());
-            PrintPointer(machine.GetPosition());
-            Console.ReadLine();
-            while (machine.Halted() == false)
+            Console.WriteLine();
+            Console.WriteLine("Running. Press any key to step the machine.");
+            Console.WriteLine();
+            while (machine.Halted == false)
             {
-                machine.Step();
+                Console.WriteLine("State " + machine.State);
+                Console.WriteLine("Tape and pointer:");
                 Console.WriteLine(machine.Print());
-                PrintPointer(machine.GetPosition());
+                PrintPointer(machine.Position);
                 Console.ReadLine();
+                machine.Step();
             }
             Console.WriteLine("Done!");
             Console.ReadLine();
