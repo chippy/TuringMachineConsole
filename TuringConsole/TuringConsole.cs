@@ -47,12 +47,12 @@ namespace TuringConsole
                     break;
                 case 4:
                     RunMachine();
-                    break; 
-                case 6:
-                    Environment.Exit(0);
                     break;
                 case 5:
                     RunInteractive();
+                    break;
+                case 6:
+                    Environment.Exit(0);
                     break;
                 default:
                     break;
