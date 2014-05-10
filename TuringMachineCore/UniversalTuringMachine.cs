@@ -24,7 +24,7 @@ namespace TuringMachineCore
         public void Run(string input)
         {
             this.tape = new TuringTape(input);
-            position = 0;
+            Reset();
             RunToEnd();
         }
         
@@ -83,6 +83,7 @@ namespace TuringMachineCore
         public void Reset()
         {
             position = 0;
+            state = 0;
             tape.Initialise();
         }
     }
