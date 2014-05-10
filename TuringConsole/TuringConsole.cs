@@ -29,7 +29,8 @@ namespace TuringConsole
             Console.WriteLine("2. Save machine");
             Console.WriteLine("3. Create machine");
             Console.WriteLine("4. Run machine");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Run in interactive mode");
+            Console.WriteLine("6. Exit");
             Console.WriteLine();
             int choice = consoleIO.GetNumber("Choice: ");
 
@@ -47,8 +48,11 @@ namespace TuringConsole
                 case 4:
                     RunMachine();
                     break; 
-                case 5:
+                case 6:
                     Environment.Exit(0);
+                    break;
+                case 5:
+                    RunInteractive();
                     break;
                 default:
                     break;
@@ -68,12 +72,44 @@ namespace TuringConsole
 
         public void RunMachine()
         {
+            Console.Clear();
             machine.Load(table);
             Console.WriteLine("Input:");
             string input = Console.ReadLine();
             machine.Run(input);
             Console.WriteLine(machine.Print());
             Console.ReadLine();
+        }
+
+        public void RunInteractive()
+        {
+            Console.Clear();
+            machine.Load(table);
+            Console.WriteLine("Input:");
+            string input = Console.ReadLine();
+            machine.LoadTape(input);
+            machine.Reset();
+            Console.WriteLine(machine.Print());
+            PrintPointer(machine.GetPosition());
+            while (machine.Halted() == false)
+            {
+                machine.Step();
+                Console.WriteLine(machine.Print());
+                PrintPointer(machine.GetPosition());
+                Console.ReadLine();
+            }
+            Console.WriteLine("Done!");
+            Console.ReadLine();
+            
+        }
+
+        public void PrintPointer(int position)
+        {
+            for (int i = 0; i < position; i++)
+            {
+                Console.Write(" ");            
+            }
+            Console.WriteLine("^");
         }
 
         public void SaveMachine()
@@ -86,6 +122,7 @@ namespace TuringConsole
 
         public void LoadMachine()
         {
+            Console.Clear();
             IEnumerable<string> machines = serializer.ListTables();
             Console.WriteLine("Tables:");
             Console.WriteLine("-------");

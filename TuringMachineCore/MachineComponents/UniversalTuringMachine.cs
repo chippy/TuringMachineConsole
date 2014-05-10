@@ -86,5 +86,21 @@ namespace TuringMachineCore
             state = 0;
             tape.Initialise();
         }
+
+        public int GetPosition()
+        {
+            return position;
+        }
+
+        public bool Halted()
+        {
+            return halted;
+        }
+
+        public void LoadTape(string input)
+        {
+            this.tape = new TuringTape(input);
+            Reset();
+        }
     }
 }
